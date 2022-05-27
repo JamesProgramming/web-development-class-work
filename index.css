@@ -80,6 +80,7 @@ a:active, a:focus {
 }
 
 .portfolio__webpage {
+    position: relative;
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: 13rem;
@@ -87,6 +88,27 @@ a:active, a:focus {
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 5rem rgba(3,3, 3, .3);
+}
+
+.portfolio__warning {
+    box-shadow: 0 0 .3rem rgba(3,3, 3, .3);
+    text-align: center;
+    background-color: rgb(255, 187, 0);
+    border-radius: .3rem;
+    padding: .3rem .5rem;
+    width: 80%;
+    position: absolute;
+    top: 1rem;
+    left: 10%;
+    z-index: 10;
+}
+
+.portfolio__warning p {
+    font-weight: bold;
+}
+
+.portfolio__warning span {
+    font-size: 1.3rem;
 }
 
 .portfolio__webpage img {
