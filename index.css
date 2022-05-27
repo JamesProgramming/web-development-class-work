@@ -1,0 +1,149 @@
+:root {
+    --color-dark: #333222;
+    --color-light: #efefef;
+    --color-primary: #0044FF;
+}
+
+body {
+    margin: auto;
+    max-width: 1500px;
+    padding: 7rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Logo svg*/
+figure {
+    margin: 0;
+}
+
+figure img {
+    filter: drop-shadow(0 0 .3rem #00000011);
+    width: 17rem;
+}
+
+figure a:link, figure a:visited {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    transition: all .2s;
+}
+
+figure a:hover img, figure a:active img {
+    filter: drop-shadow(0 0 .5rem #00000033);
+}
+
+figure a:hover, figure a:active {
+    box-shadow: none;
+}
+
+/* Main Heading */
+h1 {
+    font-size: 3rem;
+    padding: 3rem 0 2rem;
+    color: var(--color-dark);
+    text-align: center;
+}
+
+/* Global site a elements*/
+* a:link, * a:visited {
+    display: inline-block;
+    border-radius: .3rem;
+    margin: .5rem;
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-align: center;
+    text-decoration: none;
+    transition: all .2s;
+    align-self: end;
+    padding: .7rem 1.1rem;
+    white-space: pre;
+    background-color: var(--color-primary);
+    color: var(--color-light);
+}
+
+* a:hover {
+    transform: scale(1.02) rotate(-.3deg);
+    box-shadow: 0 0 .3rem rgba(3,3, 3, .1);
+}
+
+a:active, a:focus {
+    transform: scale(.98);
+    box-shadow: 0 0 .3rem rgba(3,3, 3, .1);
+
+}
+
+/* Portfolio (Website holder) */
+.portfolio {
+    display: grid;
+    grid-gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+}
+
+.portfolio__webpage {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 13rem;
+    background-color: rgb(245, 245, 245);
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 5rem rgba(3,3, 3, .3);
+}
+
+.portfolio__webpage img {
+    align-self: start;
+    width: 100%;
+    filter: brightness(90%);
+    clip-path: polygon(0 0, 100% 0, 100% 12rem, 0 12rem);
+}
+
+.portfolio__webpage a {
+    letter-spacing: .1rem;
+    font-size: 1.5rem;
+}
+
+.portfolio__webpage h2 {
+    margin: 0 0 2rem;
+    font-size: 1.7rem;
+    text-align: center;
+    padding: .5rem;
+    z-index: 2;
+}
+
+/* footer styles */
+footer {
+    padding: 4rem;
+    margin-top: 5rem;
+    background-color: #00000050;
+}
+
+h3 {
+    color: var(--color-light);
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+/* ------- MEDIA QUERY */
+@media only screen and (max-width: 1400px) {
+    html {
+        font-size: 75%;
+    }
+
+    body {
+        padding: 4rem;
+    }
+
+    .portfolio__webpage a:link, .portfolio__webpage a:visited {
+        padding: 1.5rem;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    html {
+        font-size: 57%;
+    }
+
+    body {
+        padding: 3rem;
+    }
+
+}

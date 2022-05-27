@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>S12 U04A-152z.html</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--
+
+S12 U04A-152z.html James Coolidge 2021-05-5
+
+What objectives are you demonstrating?
+ - Using nested if statements
+ - Using an anonymous function
+ - Using else if statements
+ - Using .oninput event for form input
+ - Using a return statement in a function 
+
+-->
+
+<style>
+/* reset the page to no padding, margins, and use box-sizing, border-box */
+section, p, i, header, input, h1, h2, ul, li,
+body, form {
+    display: block;
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+/* main body styles */
+body {
+    font-family: Verdana, Arial, sans-serif;
+}
+
+/* top header element in the page */
+body > header {
+    background-color: #64C567;
+    padding: 0.2% 0% 0.5% 1.5%;
+    color: white;
+    text-shadow: #777777 2px 2px 2px;
+}
+
+h1 {
+    font-size: 1.4em;
+    line-height: 1.1em;
+}
+
+body > header > p {
+    font-size: 0.95em;
+    line-height: 1em;
+}
+
+/* main page content hold style for h1 and p*/
+body section#formContainer {
+    max-width: 1150px;
+    margin: 5% auto;
+    padding: 3%;
+    outline: 1px solid #a3a3a3;
+    color: #3E3E3E;
+}
+
+section#formContainer h2 {
+    font-size: 1.9em;
+    font-weight: normal;
+}
+
+section#formContainer p {
+     font-size: 1.4em;
+     text-align: center;
+     padding: 3%;
+}
+
+section#formContainer ul {
+    position: relative;
+    width: 100%;
+    height: 170px;
+}
+
+/* make each li element into a ball shape*/
+section#formContainer li {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: #5e5e5e 4px 4px 4px;
+    width: 130px;
+    height: 130px;
+    font-size: 1.1em;
+    padding: 0px 15px;
+    text-align: center;
+    border-radius: 100%;
+}
+
+/* position each li element on the page */
+section#formContainer li#ball1 {left: 13%; bottom: 0%;}
+section#formContainer li#ball2 {left: 22.31%; bottom: 7%;}
+section#formContainer li#ball3 {left: 32.52%; bottom: 13%;}
+section#formContainer li#ball4 {left: 42.5%; bottom: 18%;}
+section#formContainer li#ball5 {left: 53.56%; bottom: 24%;}
+section#formContainer li#ball6 {left: 63.57%; bottom: 28%;}
+section#formContainer li#ball7 {left: 73.28%; bottom: 22%;}
+
+/* change forms display to flex and horizontally center its’ contents*/
+section#formContainer form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+
+/* styles for input */
+section#formContainer form input{
+    min-width: 30%;
+    height: 52px;
+    border-radius: 26px;
+    outline: none;
+    border: 1px solid #a3a3a3;
+    padding-left: 2%;
+    margin: 0% 5%;
+    font-size: 1.1em;
+    color: #3E3E3E;
+}
+
+/* divide line between the inputs */
+section#formContainer form div#line {
+    height: 52px;
+    transform: scale(1.3);
+    width: 2px;
+    background-color: #5e5e5e;
+}
+
+/* add styles to the "find out" button */
+section#formContainer form input[type^="b"] {
+    padding: 0px;
+    margin: 5% 0% 0%;
+    color: #FFFFFF;
+    background-color: #6790F1;
+    text-shadow: #777777 2px 2px 2px;
+    box-shadow:#777777 2px 2px 3px;
+    border: none;
+}
+
+section#formContainer form input[type^="b"]:hover {
+    background-color: #4372e0;
+}
+
+/* but box-shadow on input boxes when in focus*/
+section#formContainer form input:focus {
+    box-shadow: #777777 0px 0px 3px;
+}
+
+/* styles for message the user will receive*/
+section#returnValue p {
+    line-height: 4em;
+    margin-top: 3%;
+}
+
+/* position the text displayed when hover over the 
+    question mark next to age input*/
+section#formContainer form div#aQuestion p {
+    display: none;
+    position: absolute;
+    left: 23px;
+    top: -2.2em;
+    border-radius: 3px;
+    width: 870%;
+    font-size: 1em;
+    line-height: 1.2em;
+    text-align: left;
+    padding: 30%;
+    background-color: #787676;
+}
+
+/* position the question mark next to age input*/
+section#formContainer form div#aQuestion {
+    position: relative;
+    right: 4.7%;
+    top: -21px;
+    background-color: #777777;
+    height: 23px;
+    line-height: 23px;
+    width: 23px;
+    text-align: center;
+    border-radius: 100%;
+    color: #ffffff;
+    box-shadow: #4b4b4b 2px 0px 3px;
+    user-select: none;
+}
+
+/* display hidden p element under question mark */
+section#formContainer form div#aQuestion:hover p {
+    display: block;
+    user-select: none;
+}
+
+</style>
+<script src="S12-lifePosition-152z.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Who Am I</h1>
+        <p><i>Find out more about yourself</i></p>
+    </header>
+    <section id="formContainer">
+        <h2>Find Your Life Position</h2>
+        <p>Are you a</p>
+        <ul>
+            <li id="ball1">Baby?</li>
+            <li id="ball2">Kid?</li>
+            <li id="ball3">Tween?</li>
+            <li id="ball4">Teenager?</li>
+            <li id="ball5">Young Adult?</li>
+            <li id="ball6">Adult?</li>
+            <li id="ball7">Senior?</li>
+        </ul>
+        <p>Fill in the boxes below to find out</p>
+        <form>
+            <input type="text" id="nameHolder"class="inputBoxShape" name="usrName" placeholder="Name"/>
+            <div id="line"></div>
+            <input type="text" id="ageHolder" class="inputBoxShape" name="usrAge" placeholder="Age"/>
+            <div id="aQuestion">?<p>Enter numeric values. Use a decimal number if you are less than 1 year old.</p></div>
+            <input type="button" value="Find out" onclick="findLifePosition(this.form)" />
+        </form>
+        <!--user massage placed in this element-->
+        <section id="returnValue"></section>
+    </section>
+</body>
+</html>
+

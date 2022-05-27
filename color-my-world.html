@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>S12 U05B-152z.html</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--
+
+S12 James Coolidge S12-U05B-152z.html 2021-05-12
+
+What objectives are you demonstrating?
+ - Using .getElementById selector.
+ - Using .innerHTML to insert and get content inside an element
+ - Using .getElementByTagName selector.
+ - Using the .style property to change the css styles of elements
+ - Use of Math.ramdom() and Math.floor() methods to create ramdom colors
+ - Running a funciton after a page is loaded using window.onload property 
+
+-->
+
+<style>
+/* Reset the document */
+html, body, article, h1, h5, h6, p, div, span, section {
+    display: block;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+/* body styles */
+body {
+    font-family: Verdana, Arial, sans-serif;
+    max-width: 790px;
+    margin: 4% auto;
+    background-color: #F7F8F8;
+    background-color: rgb(250, 250, 250);
+    font-size: 5.2em;
+    overflow: hidden;
+    line-height: 35px;
+}
+/* section that holds "Color My World"*/
+section {
+    display: flex;
+    height: 700px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* table that displays rgb colors */
+table {
+    border-collapse: collapse;
+    display: block;
+    position: fixed;
+    top: 2%;
+    right: 1%;
+}
+
+table tbody#colorList {
+    font-size: 0.25em;
+    padding: 1.5%;
+}
+
+table td:first-of-type {
+    text-align: center;
+    border-radius: 10px 0px 0px 10px;
+}
+
+table td {
+    border-radius: 0px 10px 10px 0px;
+}
+
+table tbody tr:first-of-type td {
+    border-radius: 10px 10px 10px 10px;
+    background-color: #AABBDD;
+    padding: 1%;
+}
+
+/* make background color on every odd row white */
+table tr:nth-of-type(odd) td{
+    background-color: #EFFEFF;
+}
+
+/* animations for the div element that float across screen */
+@keyframes makeWave1 {
+    0% {bottom: -100px; right: -500px;}
+    33% {bottom: -170px; right: 33%;}
+    66% {bottom: -80px; right: 67%;}
+    100% {bottom: -120px; right: 100%;}
+}
+
+@keyframes makeWave2 {
+    0% {bottom: -200px; right: -790px;}
+    33% {bottom: -100px; right: 33%;}
+    66% {bottom: -150px; right: 66%;}
+    100% {bottom: -200px; right: 100%;;}
+}
+
+@keyframes makeWave3 {
+    0% {bottom: -400px; right: -1100px;}
+    33% {bottom: -200px; right: 33%;}
+    66% {bottom: -90px; right: 66%;}
+    100% {bottom: -300px; right: 100%;;}
+}
+
+/* div elements the float across screen */
+div {
+    height: 250px;
+    width: 500px;
+    border-radius: 250px 250px 0px 0px;
+    background-color: #115588;
+    position: absolute;
+    bottom: -100px;
+    right: 0px;
+    z-index: 1;
+    animation: makeWave1;
+    animation-duration: 30s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+div#ball1 {
+    width: 790px;
+    height: 395px;
+    border-radius: 395px 395px 0px 0px;
+    background-color: #2277AA;
+    z-index: 0;
+    animation: makeWave2;
+    animation-duration: 30s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+div#ball2 {
+    width: 1010px;
+    height: 505px;
+    border-radius: 505px 505px 0px 0px;
+    background-color: #3399BB;
+    z-index: -1;
+    animation: makeWave3;
+    animation-duration: 60s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+div#ball3 {
+    background-color: #3399BB;
+    z-index: -2;
+    animation: makeWave1;
+    animation-duration: 80s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    opacity: 0.5;
+}
+
+div#ball4 {
+    width: 790px;
+    height: 395px;
+    border-radius: 395px 395px 0px 0px;
+    background-color: #3399BB;
+    z-index: -3;
+    animation: makeWave2;
+    animation-duration: 100s;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    opacity: 0.3;
+}
+
+div#ball5 {
+    width: 1010px;
+    height: 505px;
+    border-radius: 505px 505px 0px 0px;
+    background-color: #3399BB;
+    z-index: -4;
+    animation: makeWave3;
+    animation-duration: 120s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    opacity: 0.1;
+}
+
+/* hold each letter of the text "Color My Would!"*/
+span {
+    float: left;
+    text-shadow: #777777 0px 0px 4px;
+}
+
+</style>
+
+<script>
+// execute function when the page is loaded
+window.onload = function() {
+    // get all the span elements in an array
+    var spanElements = document.getElementsByTagName("span");
+    // get the table element
+    var displayLetterColor = document.getElementById("colorList");
+    // loop through the span elements
+    for (var i = 0; i < spanElements.length; i++) {
+        // check if the span is a letter
+        if (spanElements[i].innerHTML != "&nbsp;") {
+            // get a random color from getRamdomColor()
+            var colorGenerated = getRamdomColor();
+            // set the letter's color to the random color
+            spanElements[i].style.color = colorGenerated;
+            /* add a row to the table with the letter in first coloumn 
+                and it's color in the second column */
+            displayLetterColor.innerHTML += "<tr><td>" + spanElements[i].innerHTML 
+                                            + "</td><td>: " + colorGenerated + "</td></tr>";
+            /* add a .onmouseout event to change the color of 
+            span every back to it's color stored in the currentColor array*/
+            spanElements[i].onmouseout = function() {
+                // loop through span element array
+                for (var i = 0; i < spanElements.length; i++) {
+                    spanElements[i].style.color = currentColors[i];
+                }
+                // remove the inline background color
+                document.body.style.backgroundColor = "";
+            };
+        }
+    }
+}
+
+// array to store the colors used on each letter
+var currentColors = [];
+/* This function generates a random number stores it in the curretColors array.
+    Each time a color is generate the function checks to see if it is already in the 
+    currentColor array. If it is, the function is called an again. */
+function getRamdomColor() {
+    // create random rbg color 
+    var letterColor = "rgb(" + 100 * Math.floor(3 * Math.random())+ "," 
+            + 100 * Math.floor(3 * Math.random()) + "," 
+            + 100 * Math.floor(3 * Math.random()) + ")";
+    // loop through the colors stored in currentColors
+    for (var i = 0; i < currentColors.length; i++) {
+        // check if color is in array
+        if (letterColor === currentColors[i]) {
+            // the function until color is not found in array
+            return getRamdomColor();
+            
+        }
+    }
+    // add color to end of array
+    currentColors.push(letterColor);
+    return letterColor;
+}
+
+/* This function changes the background color of the page.
+    param: currentId. Is the id of the span the mouse is over.
+    The background is changed to the color of the element to it is right. */
+function findBackgroundColor(currentId) {
+    var i = 1;
+    /* If it is the last span element (id == 12) change the background 
+        to the color of the first span */
+    if (currentId === 12) {
+        i = -12
+    }
+    // get the color and split it in to a array
+    var currentColor = currentColors[currentId + i].split("");
+    /* get the rgb numbers from the currentColor array and add a 
+        "rgba" to the front and alpha value of 0.2 */  
+    currentColor = "rgba" + currentColor.slice(3, -1).join("") + ",0.2)";
+    return currentColor;
+}
+
+/* change the div balls that move across the screen. 
+    param: theColor. is the color of the letter the mouse is over */
+function changeDivBackground(theColor) {
+    // loop through 6 times
+    for (var i = 0; i < 6; i++) {
+        // change the background color to the color of the letter the mouse is over
+        document.getElementById("ball" + i).style.backgroundColor = theColor;
+        // Make the opacity of the div great as i gets greater 
+        document.getElementById("ball" + i).style.opacity =  1 / (6 - i);
+    }
+}
+
+/* executed when mouse is over one of the span elements 
+    param: idnum. is a number that represents the id of the span */
+function mouseOverletter(idNum) {
+    // loop thirteen time to color of each letter
+    for (var i = 0; i < 13; i++) {
+        // set color to the color of the letter the mouse is over
+        document.getElementById(i).style.color = currentColors[idNum];
+    }
+    // change the background color
+    document.body.style.backgroundColor = findBackgroundColor(idNum);
+    // pass the letter's color to the function
+    changeDivBackground(currentColors[idNum]);
+
+}
+</script>
+
+</head>
+<body>
+<section>
+    <span id="0" onmouseover="mouseOverletter(0)">C</span>
+    <span id="1" onmouseover="mouseOverletter(1)">o</span>
+    <span id="2" onmouseover="mouseOverletter(2)">l</span>
+    <span id="3" onmouseover="mouseOverletter(3)">o</span>
+    <span id="4" onmouseover="mouseOverletter(4)">r</span>
+    &nbsp;
+    <span id="5"onmouseover="mouseOverletter(5)">M</span>
+    <span id="6"onmouseover="mouseOverletter(6)">y</span>
+    &nbsp;
+    <span id="7" onmouseover="mouseOverletter(7)">W</span>
+    <span id="8" onmouseover="mouseOverletter(8)">o</span>
+    <span id="9" onmouseover="mouseOverletter(9)">r</span>
+    <span id="10" onmouseover="mouseOverletter(10)">l</span>
+    <span id="11" onmouseover="mouseOverletter(11)">d</span>
+    <span id="12" onmouseover="mouseOverletter(12)">!</span>
+</section>
+<!-- table that displays the rgb values of each letter -->
+<table >
+    <tbody id="colorList">
+        <tr><td colspan="2">Each Letter Color is <i><b>Unique</b></i></td></tr>
+    </tbody>
+</table>
+
+<!-- div element that float across the screen -->
+<div id="ball0"></div>
+<div id="ball1"></div>
+<div id="ball2"></div>
+<div id="ball3"></div>
+<div id="ball4"></div>
+<div id="ball5"></div>
+
+</body>
+</html>
+
+

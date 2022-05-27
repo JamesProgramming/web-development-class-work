@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>S12 U05A-152z.html</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+
+S12 James Coolidge S12-U05A-152z.html 2021-05-19
+
+What objectives are you demonstrating?
+- Using jQuery slideUp() and slideDown() method
+- Using jQuery mouseover() and mouseout() events
+- Using jQuery click() event
+- Demonstrating the use of jQuery chaining
+- Demonstrating the use of jQuery callbacks
+- Using the jQuary select $("#demo")
+- Using jQuery .ready event
+- Using jQuery .css() method
+- Hiding and showing elements with the JQuary hide() and show() methods, respectivly.
+- Using the jQuery toggle() method
+-->
+
+    <style>
+      /* Document background reset */
+      section,
+      div,
+      p,
+      h1,
+      h2,
+      body,
+      html,
+      span,
+      iframe {
+        display: block;
+        box-sizing: border-box;
+        padding: 0px;
+        margin: 0px;
+      }
+
+      /* styles for body */
+      body {
+        background-color: #dddddd;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        font-family: verdana, Tahoma, sans-serif;
+        font-size: 1em;
+        color: #2f2f2f;
+      }
+      /* page content holder */
+      section {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-content: flex-start;
+        width: 42%;
+      }
+
+      /* drop down containers */
+      section section {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+        border-radius: 32.5px;
+        margin: 20px 0px;
+        padding: 0px 32px;
+        box-shadow: #444444 2px 3px 5px;
+        background-color: #ffffff;
+        transition: background-color 0s;
+      }
+
+      section section:hover {
+        background-color: #eeeeee;
+        transition: background-color 0.5s;
+      }
+
+      /* main heading  */
+      h1 {
+        font-size: 1.9em;
+        font-weight: normal;
+        text-shadow: #555555 1px 2px 4px;
+        color: #222222;
+      }
+
+      /* main p styles */
+      p {
+        line-height: 1.8em;
+        margin: 5% 0%;
+      }
+
+      /* drop down containers heading when closed*/
+      section > section > h2 {
+        flex: 1 1 200px;
+        font-size: 1em;
+        font-weight: normal;
+        line-height: 65px;
+      }
+
+      /* drop down containers plus symbol holder*/
+      section section .plus {
+        margin: 2% 0%;
+        position: relative;
+        height: 38px;
+        width: 38px;
+        border-radius: 100%;
+        padding: 4px;
+        transition: background-color 0s;
+        animation-duration: 0.5s;
+      }
+
+      /* drop down containers plus symbol */
+      section section .plus div {
+        position: absolute;
+        right: 44%;
+        height: 30px;
+        width: 4px;
+        background-color: #2f2f2f;
+        box-shadow: #555555 0px 0px 5px;
+      }
+
+      section section:hover div div {
+        background-color: #010101;
+      }
+
+      section section div:hover {
+        background-color: #999999;
+        transition: background-color 0.5s;
+      }
+
+      section section .plus div:last-of-type {
+        transform: rotate(90deg);
+      }
+
+      /* view all button */
+      div#viewAll {
+        text-align: center;
+        box-shadow: #444444 1px 3px 5px;
+        width: 15%;
+        padding: 0% 1.1%;
+        border-radius: 20px;
+        background-color: #ffffff;
+        line-height: 2em;
+        user-select: none;
+      }
+
+      div#viewAll:hover {
+        color: #efefef;
+        background-color: #5567ee;
+        animation-name: theButton;
+        animation-duration: 0.3s;
+      }
+
+      /* animation for view all button*/
+      @keyframes theButton {
+        0% {
+          background-color: #ffffff;
+          color: #2f2f2f;
+        }
+        100% {
+          background-color: #5567ee;
+          color: #efefef;
+        }
+      }
+
+      /* animation for plus symbol rotation */
+      @keyframes turn {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(45deg);
+        }
+      }
+
+      @keyframes turnback {
+        0% {
+          transform: rotate(45deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+
+      /* container for the iframe element */
+      section#phoneView {
+        display: none;
+        position: relative;
+        padding-right: -0px;
+        border: 50px solid #111111;
+        border-left-width: 9px;
+        border-right-width: 9px;
+        border-radius: 27px;
+        width: 432px;
+        margin: 0% 20%;
+      }
+
+      /* "phone View" and "desktop View" buttons */
+      div#switchPhone,
+      div#switchDesktop {
+        flex: 1 1 30%;
+        height: 40px;
+        width: 30%;
+        line-height: 40px;
+        text-align: center;
+        background-color: #ffffff;
+        box-shadow: #555555 1px 1px 3px;
+        margin-bottom: 3%;
+      }
+
+      /* default "phone View" button greyed out */
+      div#switchDesktop {
+        color: #cccccc;
+        cursor: not-allowed;
+      }
+
+      div#switchPhone:hover,
+      div#switchDesktop:hover {
+        background-color: #999999;
+        box-shadow: #333333 0px 1px 4px;
+      }
+
+      /* when the screen is less than 1500px wide */
+      @media screen and (max-width: 1500px) {
+        /* add margin to the top */
+        body > section {
+          margin-top: 4%;
+        }
+
+        /* remove the phone view */
+        section#phoneView {
+          display: none;
+        }
+
+        /* drop down container’s header line height */
+        section section h2 {
+          line-height: 3em;
+        }
+
+        /* increase content holder width */
+        section {
+          width: 72%;
+        }
+
+        /* remove the "Phone View" and "Desktop View" buttons */
+        div#switchPhone,
+        div#switchDesktop {
+          display: none;
+        }
+      }
+
+      /* when the screen is less than 770px wide */
+      @media screen and (max-width: 770px) {
+        /* change the cursor */
+        html {
+          cursor: pointer;
+        }
+
+        /* increase content holder width */
+        section {
+          padding: 20px 0px;
+          width: 94%;
+        }
+        /* view all button resized */
+        div#viewAll {
+          height: 61px;
+          width: 61px;
+          font-size: 0.9em;
+          border-radius: 100%;
+          padding: 1.4%;
+          line-height: 1.35em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        /* drop down containers */
+        section section {
+          padding: 0px 18px;
+        }
+
+        /* drop down container’s header line height */
+        section > section > h2 {
+          line-height: 1.3em;
+          width: 70%;
+        }
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+      // run after document is loaded
+      $(document).ready(function () {
+        // store all the p elements
+        var pElements = $("p");
+        // hide all the p elements
+        pElements.hide();
+        // array to store whether the drop down is open
+        var open = ["closed", "closed", "closed"];
+        // variable to indicate whether the mouse is over the plus symbol
+        var over = "";
+
+        // loop through for each p element tag
+        for (var i = 1; i <= pElements.length; i++) {
+          // add a click event to each drop down section tag
+          $("section section:nth-of-type(" + i + ")").click(function () {
+            /* when slideUpOrDown is evaluated in the if statement, it 
+                    will open the drop down and the function will return nothing so 
+                    the *if* will evalute to false. If it is open the funtion will return true 
+                    and if the mouse is over the X symbol the drop down will close. */
+            if (slideUpOrDown(this.id) && over) {
+              // call slideUpOrDown() with second param set to true to close drop down
+              slideUpOrDown(this.id, true);
+            }
+          });
+          // set the over variable to true if the mouse is over the plus symbol
+          $("section section:nth-of-type(" + i + ") div").mouseover(
+            function () {
+              over = true;
+            }
+          );
+          // set the over variable to false if the mouse is not over the plus symbol
+          $("section section:nth-of-type(" + i + ") div").mouseout(function () {
+            over = false;
+          });
+        }
+
+        // view all button on click
+        $("#viewAll").click(function () {
+          // check if inner text is "Show All"
+          if (this.innerHTML === "Show All") {
+            // set inner text of button to "Hide All"
+            this.innerHTML = "Hide All";
+            // loop through the drop down sections
+            for (var i = 1; i <= pElements.length; i++) {
+              // if it is "closed" open it
+              if (open[i - 1] === "closed") slideUpOrDown(i);
+            }
+          } else {
+            // set inner text of button to "Show All"
+            this.innerHTML = "Show All";
+            // loop through the drop down sections
+            for (var i = 1; i <= pElements.length; i++) {
+              // if it is "open" close it
+              if (open[i - 1] !== "closed") slideUpOrDown(i, true);
+            }
+          }
+        });
+
+        // variables for the "Phone View" and "desktop view" buttons
+        var phone = $("#phoneView");
+        var desktop = $("#desktopView");
+
+        // when "Phone View" button clicked
+        $("#switchPhone").click(function () {
+          // change the dislpay for the desktop section tag to "none".
+          desktop.css("display", "none");
+          // change the dislpay for the phone section tag to "flex"
+          phone.css("display", "flex");
+          // change the text color and cursor type for the phone view button
+          $(this).css("color", "#CCCCCC").css("cursor", "not-allowed");
+          // change the text color and cursor type for the desktop view button
+          $("#switchDesktop").css("color", "#222222").css("cursor", "default");
+        });
+
+        $("#switchDesktop").click(function () {
+          // change the display for the phone section tag to "none"
+          phone.css("display", "none");
+          // change the display for the desktop section tag to "flex".
+          desktop.css("display", "flex");
+          // change the text color and cursor type for the desktop view button
+          $(this).css("color", "#CCCCCC").css("cursor", "not-allowed");
+          // change the text color and cursor type for the phone view button
+          $("#switchPhone").css("color", "#222222").css("cursor", "default");
+        });
+
+        /* function slideUpOrDown() open and closes the drop down sections.
+            param: i. Number of the drop-down section.
+            param: x. boolean to tell whether to open or close drop down. 
+                    By default, it is set to "false" which will close the drop down. */
+        function slideUpOrDown(i, x = false) {
+          // drop down header tag id
+          var headElement = "#heading" + i;
+          // drop down paragraph tag id
+          var paragraph = "#para" + i;
+          // drop down plus symbol (or X symbol if it is open)
+          var rotatePlus = "section section:nth-of-type(" + i + ") div.plus";
+          // drop down section tag
+          var hoveredOver = $("section section:nth-of-type(" + i + ")");
+          // check if drop down is closed by looking in open array
+          if (open[i - 1] === "closed") {
+            // call goDown() to open drop down
+            goDown(headElement, paragraph, rotatePlus);
+            // set drop down to "open"
+            open[i - 1] = "open";
+            // remove hover by adding inline background stlye
+            hoveredOver.css("background-color", "#FFFFFF");
+            // check if x has been set to true
+          } else if (x === true) {
+            // call goUp() to close the drop down
+            goUp(headElement, paragraph, rotatePlus);
+            // set drop down to "open"
+            open[i - 1] = "closed";
+            // regain hover by removing inline background style
+            hoveredOver.css("background-color", "");
+          } else {
+            // return true
+            return true;
+          }
+        }
+
+        /* function to open drop downs.
+            param: headElement. Header to hide.
+            param: p tag to display.
+            param: rotatePlus div to rotate. */
+        function goDown(headElement, paragraph, rotatePlus) {
+          // hide the drop-down header
+          $(headElement).hide();
+          // slide open the drop-down paragraph
+          $(paragraph).slideDown(400);
+          // add the "turn" animation to the plus symbol
+          $(rotatePlus).css("animation-name", "turn");
+          // rotate plus symbol 45 degrees to be a X.
+          $(rotatePlus).css("transform", "rotate(45deg)");
+        }
+
+        /* function to close drop downs.
+            param: headElement. Header to show.
+            param: p tag to hide.
+            param: rotatePlus div to rotate. */
+        function goUp(headElement, paragraph, rotatePlus) {
+          // hide the paragraph tag
+          $(paragraph).slideUp(200, function () {
+            // after paragraph is hidden, show the header element
+            $(headElement).show();
+          });
+          // add the "turnback" animation to the X symbol
+          $(rotatePlus).css("animation-name", "turnback");
+          // rotate X symbol back 45 degrees to be a plus.
+          $(rotatePlus).css("transform", "rotate(0deg)");
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <!-- buttons to switch from phone view to desktop-->
+    <div id="switchPhone">Phone View</div>
+    <div id="switchDesktop">Desktop View</div>
+    <section id="desktopView">
+      <h1>Gettysburg Address</h1>
+      <div id="viewAll">Show All</div>
+      <section id="1">
+        <h2 id="heading1">Four score and seven years ago our fathers . . .</h2>
+        <p id="para1">
+          Four score and seven years ago our fathers brought forth upon this
+          continent, a new nation, conceived in Liberty, and dedicated to the
+          proposition that all men are created equal.
+        </p>
+        <!-- drop down plus symbol -->
+        <div class="plus">
+          <div></div>
+          <div></div>
+        </div>
+      </section>
+      <section id="2">
+        <h2 id="heading2">Now we are engaged in a great civil war . . .</h2>
+        <p id="para2">
+          Now we are engaged in a great civil war, testing whether that nation,
+          or any nation so conceived and so dedicated, can long endure. We are
+          met on a great battle-field of that war. We have come to dedicate a
+          portion of that field, as a final resting place for those who here
+          gave their lives that that nation might live. It is altogether fitting
+          and proper that we should do this.
+        </p>
+        <!-- drop down plus symbol -->
+        <div class="plus">
+          <div></div>
+          <div></div>
+        </div>
+      </section>
+      <section id="3">
+        <h2 id="heading3">But, in a larger sense, we can not dedicate . . .</h2>
+        <p id="para3">
+          But, in a larger sense, we can not dedicate—we can not consecrate—we
+          can not hallow—this ground. The brave men, living and dead, who
+          struggled here, have consecrated it, far above our poor power to add
+          or detract. The world will little note, nor long remember what we say
+          here, but it can never forget what they did here. It is for us the
+          living, rather, to be dedicated here to the unfinished work which they
+          who fought here have thus far so nobly advanced. It is rather for us
+          to be here dedicated to the great task remaining before us—that from
+          these honored dead we take increased devotion to that cause for which
+          they gave the last full measure of devotion—that we here highly
+          resolve that these dead shall not have died in vain—that this nation,
+          under God, shall have a new birth of freedom—and that government of
+          the people, by the people, for the people, shall not perish from the
+          earth.
+        </p>
+        <!-- drop down plus symbol -->
+        <div class="plus">
+          <div></div>
+          <div></div>
+        </div>
+      </section>
+    </section>
+    <section id="phoneView">
+      <!-- this iframe displays the current page -->
+      <iframe
+        style="width: 414px; height: 736px; border: none"
+        src="gettysburg-address-jquery.html"
+      >
+      </iframe>
+    </section>
+  </body>
+</html>

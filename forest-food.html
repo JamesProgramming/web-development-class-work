@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>S12 U05B-152z.html</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--
+
+S12 James Coolidge S12-U05A-152z.html 2021-05-19
+
+What objectives are you demonstrating?
+- Using jQuery fadeIn() method
+- Using jQuery fadeOut() method
+- Using jQuery slideUp() and slideDown() method
+- Using jQuery mouseover() and mouseout() events
+- Using jQuery click() event
+- Demonstrating the use of jQuery callbacks
+- Using the jQuery select $("#demo")
+- Using jQuery .ready event
+- Hiding elements with the jQuery hide() method
+-->
+
+<style>
+/* fade page in when loaded */
+@keyframes whenLoaded {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+/* reset the document */
+section, div, p, h1, h2, h3, body, html, span, iframe, img, menu, ul, li {
+    display: block;
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+/* body style and background image */
+body {
+    background-image: url(forest.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    font-family: verdana, Tahoma, sans-serif;
+    font-size: 1em;
+    color: #2f2f2f;
+    animation-name: whenLoaded;
+    animation-duration: 2s;
+}
+
+/* down arrow on the menu */
+body div.arrow {
+    height: 0px;
+    width: 0px;
+    border: 10px solid transparent;
+    border-top-color: #444444;
+}
+
+/* main webpage menu */
+body > menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 100px;
+    font-size: 1.3em;
+    padding: 0% 3% 0% 1%;
+    text-align: center;
+    box-shadow: #000000 0px 0px 20px;
+}
+
+/* menu p tags */
+body > menu p {
+    align-self: flex-end;
+    line-height: 100px;
+    width: 10%;
+    font-style: italic;
+}
+
+/* menu section to hold "Home" "Location" "Our-Menu" "Make-An-Order"*/
+body > menu > section {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    margin-right: 20%;
+}
+/* menu section div size */
+body > menu > section div {
+    width: 25%;
+}
+
+/* menu p tags for section div*/
+body > menu > section > div p {
+    width: 100%;
+}
+
+/* width of "location" p tag in menu */
+body > menu > section > div:nth-of-type(2)  p {
+    width: 85%;
+    float: left;
+}
+
+/* position for down arrow next to "location" in menu */
+body > menu > section > div div {
+    width: 15%;
+    float: left;
+    position: relative;
+    top: 46%;
+    right: 12%;
+}
+
+/* menu hover */
+body > menu p:hover,  body > menu > section > div:hover {
+    background-color: #DDDDDD;
+}
+
+/* logo size on menu*/
+body > menu > img {
+    height: 100%;
+}
+
+/* main page content holder */
+body > section.mainBody {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: space-around;
+    height: 800px;
+}
+
+/* section to hold the description of each menu option */
+body section#desc {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80%;
+    background-color: rgba(250, 250, 250, 0.7);
+    padding: 1% 3%;
+    height: 400px;
+    line-height: 1.5em;
+    color: #000000;
+}
+
+/* description holder dived into thirds */
+body section#desc section {
+    display: flex;
+    justify-content: flex-start;
+    width: 33%;
+    padding: 2%;
+}
+
+/* description section h2 styles */
+body section#desc section h2 {
+    font-size: 1.3em;
+    padding-bottom: 2%;
+}
+
+/* description section h3 styles */
+body section#desc section h3 {
+    font-size: 1.2em;
+    padding-bottom: 2%;
+}
+
+/* description section list styles */
+body section#desc section ul li {
+    display: list-item;
+    list-style-type: disc;
+    list-style-position: inside;
+}
+
+body section#desc section ul {
+    padding-bottom: 4%;
+}
+
+/* section "Our-Menu" in main page */
+body > section section#ourMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    background-color: #FFFFFF;
+    height: 120px;
+    border-radius: 60px;
+    font-size: 1.7em;
+    text-transform: uppercase;
+    font-style: italic;
+}
+
+/* section "Our-Menu" in main page */
+body > section.mainBody menu, section#desc {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+/* invisible div in main page */
+body > section div#holdSpace {
+    height: 200px;
+    width: 100%;
+}
+
+/* food menu and description section */
+body > section.mainBody > menu > section, section#desc section {
+    position: relative;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+}
+/* food menu drop down divs */
+body > section.mainBody > menu > section > div {
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 43px;
+    padding: 7% 7% 7% 13%;
+    box-shadow: #555555 0px 0px 4px;
+    border: 3px solid transparent;
+}
+
+/* food menu drop down headers */
+body > section.mainBody > menu > section div p {
+    float: left;
+}
+
+/* food menu drop down div arrows */
+body > section.mainBody > menu > section div div.arrow {
+    float: right;
+    position: relative;
+    top: 25%;
+}
+
+/* food menu drop down divs hover */
+body > section.mainBody > menu > section > div:hover {
+    border-color:#555AAA;
+}
+
+body > section.mainBody > menu > section > div:hover div {
+    border-top-color: #000000;
+}
+ 
+/* food menu drop down options */
+body > section.mainBody > menu > section > section {
+    position: absolute;
+    top: 102%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    box-shadow: #555555 0px 0px 5px;
+    z-index: 1;
+}
+
+/* food menu drop down option p tag */
+body > section.mainBody > menu > section > section p {
+    width: 100%;
+    padding: 5%;
+    line-height: 1.7em;
+}
+
+/* food menu drop down option i tag */
+body > section.mainBody > menu > section > section i {
+    padding: 7px;
+    font-size: 0.9em;
+    color: #222222;
+}
+
+/* food menu drop down options hover */
+body > section.mainBody > menu > section > section p:hover {
+    background-color: #DDDDDD;
+}
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    // run when document is loaded
+    $(document).ready(function() {
+        // hide the drop-down options and description section tags
+        $("#appetizers, #entrees, #desserts, #beverages, #desc").hide();
+        // store the drop-down options section tag
+        var dropDowns = $("body > section.mainBody > menu > section > section");
+        // store the options in the drop-down section tag
+        var dropDownsOption = $("body > section.mainBody > menu > section > section p");
+        // store the drop-down menu button on the screen 
+        var dropDownSection = $("body > section.mainBody > menu > section div");
+        // when the drop-down button is clicked
+        dropDownSection.click(function() {
+            // get the text in the drop-down button and make it lower case
+            var theId = this.innerText.toLowerCase();
+            // close all open drop-down options
+            dropDowns.fadeOut();
+            // open options for the drop down clicked
+            $("#" + theId).fadeIn(); 
+        });
+
+        // variable to store the value of whether a drop-down button
+        var over;
+        // when user clicks in the main body
+        $("body").click(function() {
+            // if mouses is not over a drop-down button
+            if (over) {
+                // hide all drop down options
+                dropDowns.fadeOut();
+            }
+        });
+        
+        // when mouse is over a drop-down button
+        dropDownSection.mouseover(function() {
+            // set over to false
+            over = false;
+        });
+
+        // when mouse is not over a drop-down button
+        dropDownSection.mouseout(function() {
+            // set over to true
+            over = true;
+        });
+
+        // when option in drop-down section is click 
+        $(dropDownsOption).click(function() {
+            /* take the option's text and spilt it into two 
+                part and set variable equal to first */
+            var headerText = this.innerHTML.split("<br>")[0];
+            // hide the description section
+            $("#desc").slideUp(function() {
+                // set the header tag in the description section to the option name clicked
+                document.getElementsByTagName("h2")[0].innerText = headerText;
+            });
+            
+            // hide the invisible div in the page 
+            $("#holdSpace").slideUp(200, function() {
+                // show the desccription section
+                $("#desc").slideDown();   
+            });
+        });
+    }); 
+</script>
+</head>
+<body>
+    <!-- menu across top of page -->
+    <menu>
+        <img src="forest_food_logo.png" alt="forest food logo" />
+        <section>
+            <div><p>Home</p></div>
+            <div><p>Locations</p><div class="arrow"></div></div>
+            <div><p>Our-Menu</p></div>
+            <div><p>Make-An-Order</p></div>
+        </section>
+        <p>About</p>
+    </menu>
+    <!-- main page content -->
+    <section class="mainBody">
+        <section id="ourMenu">
+            <p>Our-Menu</p>
+        </section>
+        <menu>
+            <!-- drop down buttons -->
+            <section>
+                <div><p>Appetizers</p><div class="arrow"></div></div>
+                <!-- drop down options (hide when page is first loaded)-->
+                <section id="appetizers">
+                    <p>Salad<br /><i>With your choice of dressing</i></p>
+                    <p>Soup<br /><i>With your choice of dressing</i></p>
+                    <p>Bread<br /><i>Gluten free options available</i></p>
+                </section> 
+            </section>
+            <section>
+                <div><p>Entrees</p><div class="arrow"></div></div>
+                <!-- drop down options (hide when page is first loaded)-->
+                <section id="entrees">
+                    <p>Grilled turkey<br /><i>Integer tempor molestie justo</i></p>
+                    <p>Mountain fish<br /><i>Integer tempor molestie justo</i></p>
+                    <p>Appalachian Noodles<br /><i>Integer tempor molestie justo</i></p>
+                </section> 
+            </section>
+            <section>
+                <div><p>Desserts</p><div class="arrow"></div></div>
+                <!-- drop down options (hide when page is first loaded)-->
+                <section id="desserts">
+                    <p>Pie<br /><i>Integer tempor molestie justo</i></p>
+                    <p>Ice Cream<br /><i>Integer tempor molestie justo</i></p>
+                    <p>Cake<br /><i>Integer tempor molestie justo</i></p>
+                </section> 
+            </section>
+            <section>
+                <div><p>Beverages</p><div class="arrow"></div></div>
+                <!-- drop down options (hide when page is first loaded)-->
+                <section id="beverages">
+                    <p>Lemon Juice<br /><i>Integer tempor molestie justo</i></p>
+                    <p>Soda<br /><i>Integer tempor molestie justo</i></p>
+                    <p>Coffee<br /><i>Integer tempor molestie justo</i></p>
+                </section> 
+            </section>
+        </menu>
+        <!-- div to hold space so that the menu drop-downs are 
+            closer to the top of the page -->
+        <div id="holdSpace"></div>
+        <!-- description displayed when a drop down menu option is clicked -->
+        <section id="desc">
+            <section>
+                <h2>Nam eget ipsum</h2>
+                <p>The would contain a list of options amet, consectetur adipiscing elit. Aliquam vulputate lectus 
+                    a sodales porta. Maecenas vel augue ac ligula gravida volutpat. Nullam diam massa, 
+                    porta ac erat at, scelerisque luctus quam. Quisque ullamcorper urna arcu, sed maximus
+                </p>
+            </section>
+            <section>
+                <h3>Ut auctor neque ($10.00)</h3>
+                <ul>
+                    <li>Sed mattis magna vel facilisis</li>
+                    <li>Imperdiet malesuada. Suspendisse</li>
+                    <li>Integer tempor molestie justo tempor finibus</li>
+                    <li>Nulla gravida fermentum tortor</li>
+                </ul>
+                <h3>Phasellus vitae ($5.00)</h3>
+                <ul>
+                    <li>Sed mattis magna vel facilisis</li>
+                    <li>Imperdiet malesuada. Suspendisse</li>
+                    <li>Integer tempor molestie justo tempor finibus</li>
+                    <li>Nulla gravida fermentum tortor</li>
+                </ul>
+            </section>
+            <section>   
+                <h3>Consectetur varius est ($1.00)</h3>
+                <ul>
+                    <li>Sed mattis magna vel facilisis</li>
+                    <li>Imperdiet malesuada. Suspendisse</li>
+                    <li>Integer tempor molestie justo tempor finibus</li>
+                    <li>Nulla gravida fermentum tortor</li>
+                </ul>
+            </section>
+        </section>
+    </section>
+</body>
+</html>
+
+

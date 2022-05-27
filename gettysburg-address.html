@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>S12 U05A-152z.html</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--
+
+S12 James Coolidge S12-U05A-152z.html 2021-05-12
+
+What objectives are you demonstrating?
+ - Using .getElementById selector.
+ - Using .getElementByClassName selector.
+ - Using .getElementByTagName selector.
+ - Using "this" to modify properties of element.
+ - Using the .parentElement property to select the elements parent tag. 
+ - Using the .style property to change the css styles of elements
+ 
+-->
+
+<style>
+
+/* Reset the document */
+html, body, article, h1, h5, h6, p, div, span, section {
+    display: block;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+/* body styles */
+body {
+    font-family: Verdana, Arial, sans-serif;
+    max-width: 790px;
+    margin: 4% auto;
+    color: #222222;
+    background-color: #F7F8F8;
+    background-color: rgb(230, 230, 230);
+}
+
+/* header, section, h1, h5, h6, and p styles */
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    float: right;
+}
+
+section {
+    float: left;
+    margin: 2% 0%;
+    padding: 5px 2.6%;
+    box-shadow: #989898 0px 0px 5px;
+    background-color: #FCFCFD;
+    width: 100%;
+}
+
+h1 {
+    clear: both;
+    font-size: 1.8em;
+    font-weight: normal;
+    text-shadow: #777777 2px 2px 3px;
+}
+
+h5 {
+    font-size: 0.9em;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+h6 {
+    font-size: 1.08em;
+    font-weight: normal;
+    line-height: 45px;
+    float: left;
+}
+
+p {
+    line-height: 30px;
+    font-size: 1.05em;
+    padding-top: 10px;
+    text-align: justify;
+    opacity: 0;
+    display: none;
+}
+
+/* dark mode button */
+div#pageColor {
+    position: relative;
+    height: 35px;
+    width: 77px;
+    border:2px solid #888888;
+    background-color: #BBBBBB;
+    border-radius: 17px;
+    box-shadow: #555555 0px 0px 2px;
+}
+
+/* circle in the dark mode button */
+div#pageColor div {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 31px;
+    width: 31px;
+    border-radius: 100%;
+    box-shadow: #333333 0px 0px 3px;
+    background-color: #EFEFEF;
+}
+
+div#pageColor:hover {
+    border-color: #444444;
+    background-color: #777777;
+}
+
+div#pageColor:hover div {
+    background-color: #FFFFFF;
+    box-shadow: #222222 0px 0px 3px;
+}
+
+/* div to hold arrow that opens the paragraphs */
+div.dropDownArrow {
+    height: 47px;
+    width: 47px;
+    border-radius: 100%;
+    float: right;
+}
+
+/* arrows to open paragraphs */
+div.dropDownArrow div {
+    width: 22px;
+    height: 4px;
+    background-color: #515170;
+    transform: rotate(39deg);
+    position: relative;
+    top: 25px;
+    left: 4.5px;
+    box-shadow: #777777 -1px 0px 3px;
+}
+
+/* right side arrows to open paragraphs */
+div.dropDownArrow div:last-of-type {
+    transform: rotate(-39deg);
+    position: relative;
+    top: 21px;
+    left: 20.5px;
+}
+
+/* div to hold arrow hover style */
+div.dropDownArrow:hover {
+    background-color: #CCCCCC;
+}
+
+section div:hover div {
+    background-color: #111111;
+}
+</style>
+
+<script>
+// variable to tell whether the page is not in dark mode. 1 -> true, and 0 -> false.
+var backgroundPageColor = 1;
+
+// function executed when dark mode button clicked
+function changeColor() {
+    // get all the section elements and store them in this variable
+    var sections = document.getElementsByTagName("section");
+    // get all the down arrow div elements and store them in this variable
+    var divArrows = document.querySelectorAll("div.dropDownArrow div");
+    // get all the div elements that hold the down arrow and store them in this variable
+    var divArrowHolder = document.querySelectorAll("div.dropDownArrow");
+    // get the white circle div element in the dark mode button div element
+    var divChangeButton = document.getElementsByTagName("div")[1];
+
+    // check to see if the dark mode is on.
+    if (backgroundPageColor) {
+        // change the body background to dark and the color to white
+        document.body.style.backgroundColor = "#333333";
+        document.body.style.color = "#CCCCCC";
+        // change the section backgrounds to dark
+        sections[0].style.backgroundColor = "#444444";
+        sections[1].style.backgroundColor = "#444444";
+        sections[2].style.backgroundColor = "#444444";
+        // loop through the arrow div elements
+        for (var i = 0; i < divArrows.length; i++) {
+            // change arrow background color to dark and remove shadow
+            divArrows[i].style.backgroundColor = "#CCCCCC";
+            divArrows[i].style.boxShadow = "none";
+        }
+        // loop through the divs that hold the down arrows
+        for (var i = 0; i < divArrowHolder.length; i++) {
+            // when mouse is over the element
+            divArrowHolder[i].onmouseover = function() {
+                // the div element background color to a darker color
+                this.style.backgroundColor = "#787876";
+            }
+            // when mouse is no longer over the div element
+            divArrowHolder[i].onmouseout = function() {
+                // remove the inline background color style
+                this.style.backgroundColor = "";
+            }
+        }
+        // get the parrent element (dark mode div element) and change background to red
+        divChangeButton.parentElement.style.backgroundColor = "#AA4444";
+        // move the div circle elemnet in dark mode button to the left side
+        divChangeButton.style.left = "0px";
+        // set backgroundPageColor to false (0 == false)
+        backgroundPageColor = 0;
+    } else {
+        /* Remove th inline styles in the body and section elements. 
+            The backgrounds will change to there origonal colors */
+        document.body.style.backgroundColor = "";
+        document.body.style.color = "";
+        sections[0].style.backgroundColor = "";
+        sections[1].style.backgroundColor = "";
+        sections[2].style.backgroundColor = "";
+        // loop through the arrow div elements
+        for (var i = 0; i < divArrows.length; i++) {
+            // remove the inline background styles
+            divArrows[i].style.backgroundColor = "";
+            // remove the "none" from the inline box-shadow style
+            divArrows[i].style.boxShadow = "";
+        }
+        // loop through the divs that hold the down arrows
+        for (var i = 0; i < divArrowHolder.length; i++) {
+            // when mouse is over the element
+            divArrowHolder[i].onmouseover = function() {
+                // change the div element at index i to have a whiter background color
+                this.style.backgroundColor = "#CCCCCC";
+            }
+        }
+        // remove the inline background color on the dark mode button
+        divChangeButton.parentElement.style.backgroundColor = "";
+        // place the circle in the dark mode button on the right side
+        divChangeButton.style.left = "";
+        // set the backgroundPageColor variable to true (1 == true)
+        backgroundPageColor = 1;
+    }
+} 
+
+/* this function flips the drop-down arrow to point up or down.
+    param: num. Is the id of the div element click
+    param: downArrow. Is the div element the holds the arrow. */
+function turnOver(num, downArrow) {
+    // p element to be displayed
+    var paragraph = document.getElementById("para" + num);
+
+    // check whether the drop down is closed (if true, flip the arrow up)
+    if (xopen[num - 1] === "closed") {
+        // variable that give the starting position in degrees of the arrow  
+        var i = 0;
+        /* each time this function is called, the arrow is turn 10 degrees
+            and the opacity is increased 1/80. */
+        function flipUp() {
+            // set rotate style for arrow
+            downArrow.style.transform = "rotate(" + i + "deg)";
+            // increase p element opacity
+            paragraph.style.opacity = i / 180;
+            // check if arrow has been rotated 180 degrees
+            if (i === 180) {
+                // stop the interval
+                clearInterval(start);
+            }
+            i += 10;  
+        }
+        // call the flipUp function every 5 milliseconds
+        var start = setInterval(flipUp, 5);
+    } else {
+        // variable that give the starting position in degrees of the arrow  
+        var i = 180;
+        // set the opacity back to 0
+        paragraph.style.opacity = 0;
+        // each time this function is called, the arrow is turn -10 degrees
+        function flipDown() {
+            // set rotate style for arrow
+            downArrow.style.transform = "rotate(" + i + "deg)";
+            // check if arrow has been rotated to degree 0 
+            if (i === 0) {
+                // stop interval
+                clearInterval(start);
+            }
+            i -= 10;
+        }
+        // call the flipUp function every 5 milliseconds
+        var start = setInterval(flipDown, 5);
+    }
+}
+
+// this array store the value that indicates whether the drop down is open
+xopen = ["closed", "closed", "closed"];
+/* function executed when the down arrow is click.
+ param: num. The number to indicate which arrow was clicked */
+
+function closeAndOpen(num) {
+        // get the h6 element displayed when drop down is closed
+        var headingId = document.getElementById("heading" + num);
+        // get the p element that are belongs to that drop down
+        var paraId = document.getElementById("para" + num);
+        // get the div element that holds the down arrow
+        var downArrow = document.getElementsByClassName("dropDownArrow")[num - 1];
+
+        // check to see if the drop down is closed
+        if (xopen[num - 1] === "closed") {
+            // hind the h6 element 
+            headingId.style.display = "none";
+            // display the p element (opacity is 0)
+            paraId.style.display = "block";
+            // call function to flip the arrow to point up
+            turnOver(num, downArrow);
+            // set the current drop down to "open"
+            xopen[num - 1] = "open";
+        } else {
+            // display the h6 heading
+            headingId.style.display = "block";
+            // hind the p element
+            paraId.style.display = "none";
+            // call function to flip the arrow to point down
+            turnOver(num, downArrow);
+            // set the current drop down to "closed"
+            xopen[num - 1] = "closed";
+        }
+}
+
+</script>
+
+</head>
+<body>
+    <header>
+        <h5>Dark Mode</h5>
+        <!-- dark mode button -->
+        <div id="pageColor" onclick="changeColor()"><div></div></div>
+    </header>
+    <h1>Gettysburg Address</h1>
+    <article>
+        <section>
+            <h6 id="heading1">Four score and seven years ago our fathers . . .</h6>
+            <p id="para1"> 
+                Four score and seven years ago our fathers brought forth upon this continent, 
+                a new nation, conceived in Liberty, and dedicated to the proposition that all 
+                men  are created equal.
+            </p>
+            <!-- drop down arrow -->
+            <div class="dropDownArrow" onclick="closeAndOpen(1)"><div></div><div></div></div>
+        </section>
+        <section>
+            <h6 id="heading2">Now we are engaged in a great civil war . . .</h6>
+            <p id="para2">
+                Now we are engaged in a great civil war, testing whether that nation, or any nation 
+                so conceived and so dedicated, can long endure. We are met on a great battle-field 
+                of that war. We have come to dedicate a portion of that field, as a final resting 
+                place for those who here gave their lives that that nation might live. It is 
+                altogether fitting and proper that we should do this.
+            </p>
+            <!-- drop down arrow -->
+            <div class="dropDownArrow" onclick="closeAndOpen(2)"><div></div><div></div></div>
+        </section>
+        <section>
+            <h6 id="heading3">But, in a larger sense, we can not dedicate . . .</h6>
+            <p id="para3">
+                But, in a larger sense, we can not dedicate—we can not consecrate—we can 
+                not hallow—this ground. The brave men, living and dead, who struggled here, 
+                have consecrated it, far above our poor power to add or detract. The world will 
+                little note, nor long remember what we say here, but it can never forget what 
+                they did here. It is for us the living, rather, to be dedicated here to the unfinished 
+                work which they who fought here have thus far so nobly advanced. It is rather 
+                for us to be here dedicated to the great task remaining before us—that from 
+                these honored dead we take increased devotion to that cause for which they 
+                gave the last full measure of devotion—that we here highly resolve that these 
+                dead shall not have died in vain—that this nation, under God, shall have a new birth 
+                of freedom—and that government of the people, by the people, for the people, shall 
+                not perish from the earth.
+            </p>
+            <!-- drop down arrow -->
+            <div class="dropDownArrow" onclick="closeAndOpen(3)"><div></div><div></div></div>
+        </section>
+    </article>
+</body>
+</html>
+
+
